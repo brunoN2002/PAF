@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import numpy as npgit stat
+import numpy as np
 def funkcija_dvije_tocke():
     try:
         x1=float(input("x kordinate prve tocke: "))
