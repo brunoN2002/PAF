@@ -18,7 +18,7 @@ def funkcija_dvije_tocke():
             plt.show()
         if z=="s":
             g=input("Upišite naziv pdf datoteke: ")
-            plt.savefig(g, formt="pdf")
+            plt.savefig(g, format="pdf")
     except ValueError:
         raise ValueError("kordinate su neispravne, ponovno upišite kordinate") from None
 
