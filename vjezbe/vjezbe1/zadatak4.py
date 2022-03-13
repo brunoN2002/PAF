@@ -1,15 +1,11 @@
-def funkcija_dvije_tocke():
-    try:
-        x1=float(input("x kordinate prve tocke: "))
-        y1=float(input("y kordinate prve tocke: "))
-        x2=float(input("x kordinate druge tocke: "))
-        y2=float(input("y kordinate druge tocke: "))
-        k=(y2-y1)/(x2-x1)
+def funkcija_dvije_tocke(x1,y1,x2,y2):
+    k=(y2-y1)/(x2-x1)
+    if isinstance(x1, float) and isinstance(y1, float) and isinstance(x2, float) and isinstance(y2, float):
         if k+x1-y1<0:
             print("y=", k, "x  -", abs(k*x1-y1))
         elif k+x1-y1>=0:
             print("y=", k, "x  +", abs(k*x1-y1))
-    except ValueError:
-        raise ValueError("kordinate su neispravne, ponovno upišite kordinate") from None
+    else:
+        print("kordinate pogrešno unesene, probajte ponovno")
 
-funkcija_dvije_tocke()
+funkcija_dvije_tocke(1.0,2.0,3.0,4.0)
