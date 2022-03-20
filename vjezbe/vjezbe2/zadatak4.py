@@ -141,7 +141,7 @@ def jeli_meta_pogođena(v0, kut, x0, y0, dt, r, p, q):
     if y[-1]>=q-r and y[-1]<=q+r:
         print("projektil je pogodio metu")
     else:
-        print("projrktil nije pogodio metu")
+        print("projektil nije pogodio metu")
     y_meta=list()
     y_meta.append(q-r)
     y_meta.append(q+r)
