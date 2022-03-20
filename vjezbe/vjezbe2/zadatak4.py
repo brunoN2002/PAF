@@ -115,5 +115,40 @@ def maksimalna_brzina(v0, kut, x0, y0, dt):
             z=i
     print("maksimalna brzina je", z, "m/s")
 
-maksimalna_brzina(200, 70, 0, 0, 0.01)
+def jeli_meta_pogođena(v0, kut, x0, y0, dt, r, p, q):
+    v_x=list()
+    v_x.append(np.cos(np.radians(kut))*v0)
+    v_y=list()
+    v_y.append(np.sin(np.radians(kut))*v0)
+    x=list()
+    x.append(x0)
+    y=list()
+    y.append(y0)
+    a_y=list()
+    a_y.append(-9.81)
+    a_x=list()
+    a_x.append(0)
+    t=list()
+    t.append(0)
+    while x[-1]<=p:
+        t.append(t[-1]+dt)
+        x.append(x[-1]+v_x[-1]*dt)
+        y.append(y[-1]+v_y[-1]*dt)
+        v_x.append(v_x[-1]+a_x[-1]*dt)
+        v_y.append(v_y[-1]+a_y[-1]*dt)
+        a_y.append(-9.81)
+        a_x.append(0)
+    if y[-1]>=q-r and y[-1]<=q+r:
+        print("projektil je pogodio metu")
+    else:
+        print("projrktil nije pogodio metu")
+    y_meta=list()
+    y_meta.append(q-r)
+    y_meta.append(q+r)
+    x_meta=list()
+    x_meta.append(p)
+    x_meta.append(p)
+    plt.plot(x_meta, y_meta)
+    plt.plot(x,y)
+    plt.show()
 
