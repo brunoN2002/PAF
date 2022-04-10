@@ -10,7 +10,7 @@ m=0.5
 k=1
 x0=10
 t=0.01
-analiticki_period=2*np.pi*(math.sqrt(k/m))
+analiticki_period=2*np.pi*(math.sqrt(m/k))
 for i in range(100):
     p1= hrm.HarmonicOscilator(k, m, x0, dt)
     dt=dt+t

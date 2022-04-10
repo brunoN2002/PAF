@@ -16,6 +16,3 @@ plt.plot(angle1, range1)
 plt.show()
 plt.plot(angle1,time1)
 plt.show()
-
-
-

@@ -16,18 +16,18 @@ class HarmonicOscilator:
         self.brzina=list()
         self.brzina.append(0)
 
-    def gibanje(self, t):
+    def gibanje(self, t, z):
         for i in np.arange(0, t, self.dt):
             self.brzina.append(self.brzina[-1]+self.akceleracija[-1]*self.dt)
             self.pomak.append(self.pomak[-1]+self.brzina[-1]*self.dt)
             self.akceleracija.append(-(self.k/self.m)*self.pomak[-1])
             self.vrijeme.append(self.vrijeme[-1]+(self.dt))
-        plt.plot(self.vrijeme, self.pomak)
-        plt.show()
-        plt.plot(self.vrijeme, self.brzina)
-        plt.show()
-        plt.plot(self.vrijeme, self.akceleracija)
-        plt.show()
+        if z=="x":
+            plt.plot(self.vrijeme, self.pomak)
+        if z=="v":
+            plt.plot(self.vrijeme, self.brzina)
+        if z=="a":
+            plt.plot(self.vrijeme, self.akceleracija)
 
     def period(self):
         if -(self.k/self.m)*self.x0<0:
