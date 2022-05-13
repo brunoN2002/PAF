@@ -42,10 +42,10 @@ class Particle:
         return plt.show()
 
     def __ax2(self, x, v, t):
-        return -(((self.r*self.C*self.A/2*self.m)*(v)**2)*np.sign(v))
+        return -1*(((self.r*self.C*self.A/2*self.m)*(v)**2)*np.sign(v))
 
     def __ay2(self, x, v, t):
-        return -9.81+(((self.r*self.C*self.A/2*self.m)*(v)**2)*np.sign(v))
+        return -9.81-(((self.r*self.C*self.A/2*self.m)*(v)**2)*np.sign(v))
 
     def __moveRGK(self):
         k1vx=self.__ax2(self.x[-1], self.vx[-1], self.vrijeme[-1])*self.dt
@@ -69,13 +69,12 @@ class Particle:
         self.vx.append(self.vx[-1]+(1/6)*(k1vx+2*k2vx+2*k3vx+k4vx))
         self.x.append(self.x[-1]+(1/6)*(k1x+2*k2x+2*k3x+k4x))
         self.vy.append(self.vy[-1]+(1/6)*(k1vy+2*k2vy+2*k3vy+k4vy))
-        self.y.append(self.x[-1]+(1/6)*(k1y+2*k2y+2*k3y+k4y))
+        self.y.append(self.y[-1]+(1/6)*(k1y+2*k2y+2*k3y+k4y))
         self.vrijeme.append(self.vrijeme[-1]+self.dt)
 
     def rangeRGK(self):
         while self.y[-1]>=0:
             self.__moveRGK()
-            print(self.y)
         return (self.x[-1])
 
     def plot_trajectoryRGK(self):
