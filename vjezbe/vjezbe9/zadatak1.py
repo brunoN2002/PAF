@@ -69,7 +69,7 @@ class BungeeJumping:
         
     def grafRK(self, t):
         N=int(t/self.dt)
-        for i in range(N):
+        for i in range(N): 
             self.__moveRK()
         #print(self.y)
         #print(self.vrijeme)
