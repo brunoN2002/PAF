@@ -18,6 +18,7 @@ class ElectricForce:
         self.r0=r0
         self.E0=E0
         self.B0=B0
+        self.vrijeme.append(0)
         self.a.append(np.array((0,0,0)))
         self.r.append(r0)
         self.v.append(v0)
@@ -28,23 +29,57 @@ class ElectricForce:
         self.__init__()
 
     def __move(self):
-        self.F=self.q*self.E[-1]+self.q*(np.dot(self.v[-1],self.B[-1]))
+        self.F=self.q*self.E[-1]+self.q*(np.cross(self.v[-1],self.B[-1]))
         self.a.append(self.F/self.m)
         self.v.append(self.v[-1]+self.a[-1]*self.dt)
         self.r.append(self.r[-1]+self.v[-1]*self.dt)
         self.E.append((self.E0))
         self.B.append((self.B0))
 
-    def trajectory(self, t):
+    def plot_trajectory(self,t):
+        self.x=list()
+        self.y=list()
+        self.z=list()
         N=int(t/self.dt)
         for i in range(N):
             self.__move()
-        fig=plt.figure()
+        for element in self.r:
+            self.x.append(element[0])
+            self.y.append(element[1])
+            self.z.append(element[2])
+        fig = plt.figure()
         ax = fig.add_subplot(projection='3d')
-        ax.plot(self.r[0],self.r[1],self.r[2])
-        plt.show()
+        ax.plot(self.x,self.y,self.z)
+
+    def __a(self, x, v, t):
+        return (self.q*self.E[-1]+self.q*(np.cross(v,self.B[-1])))/self.m
 
 
-p1=ElectricForce()
-p1.set_initial_conditions(np.array((0.1,0.1,0.1)),np.array((0,0,0)),np.array((0,0,0)),np.array((0,0,1)),-1,1,0.01)
-p1.trajectory(10)
+    def __moveRK(self):
+        k1vy=self.__a(self.r[-1], self.v[-1], self.vrijeme[-1])*self.dt
+        k1y=self.v[-1]*self.dt
+        k2vy=self.__a(self.r[-1]+k1y/2, self.v[-1]+k1vy/2, self.vrijeme[-1]+self.dt/2)*self.dt
+        k2y=(self.v[-1]+k1vy/2)*self.dt
+        k3vy=self.__a(self.r[-1]+k2y/2, self.v[-1]+k2vy/2, self.vrijeme[-1]+self.dt/2)*self.dt
+        k3y=(self.v[-1]+k2vy/2)*self.dt
+        k4vy=self.__a(self.r[-1]+k3y, self.v[-1]+k3vy, self.vrijeme[-1]+self.dt)*self.dt
+        k4y=(self.v[-1]+k3vy)*self.dt
+
+        self.vrijeme.append(self.vrijeme[-1]+self.dt)
+        self.v.append(self.v[-1]+(1/6)*(k1vy+2*k2vy+2*k3vy+k4vy))
+        self.r.append(self.r[-1]+(1/6)*(k1y+2*k2y+2*k3y+k4y))
+
+    def plot_trajectoryRK(self,t):
+        self.x=list()
+        self.y=list()
+        self.z=list()
+        N=int(t/self.dt)
+        for i in range(N):
+            self.__moveRK()
+        for element in self.r:
+            self.x.append(element[0])
+            self.y.append(element[1])
+            self.z.append(element[2])
+        fig = plt.figure()
+        ax = fig.add_subplot(projection='3d')
+        ax.plot(self.x,self.y,self.z)
