@@ -17,14 +17,16 @@ class ElectricForce:
         self.v0=v0
         self.r0=r0
         self.E0=E0
-        self.B0=B0
         self.vrijeme.append(0)
+        self.B0=B0
         self.a.append(np.array((0,0,0)))
         self.r.append(r0)
         self.v.append(v0)
         self.E.append(E0)
-        self.B.append(B0)
+        self.B.append(self.B0(self.vrijeme[-1]))
+        print(self.E)
         print(self.v)
+        print(self.B)
 
     def reset(self):
         self.__init__()
@@ -34,8 +36,9 @@ class ElectricForce:
         self.a.append(self.F/self.m)
         self.v.append(self.v[-1]+self.a[-1]*self.dt)
         self.r.append(self.r[-1]+self.v[-1]*self.dt)
+        self.vrijeme.append(self.vrijeme[-1]+self.dt)
         self.E.append((self.E0))
-        self.B.append((self.B0))
+        self.B.append((self.B0(self.vrijeme[-1])))
 
     def plot_trajectory(self,t):
         self.x=list()
@@ -69,6 +72,7 @@ class ElectricForce:
         self.vrijeme.append(self.vrijeme[-1]+self.dt)
         self.v.append(self.v[-1]+(1/6)*(k1vy+2*k2vy+2*k3vy+k4vy))
         self.r.append(self.r[-1]+(1/6)*(k1y+2*k2y+2*k3y+k4y))
+        self.B.append((self.B0(self.vrijeme[-1])))
 
     def plot_trajectoryRK(self,t):
         self.x=list()
