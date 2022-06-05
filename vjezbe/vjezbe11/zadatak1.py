@@ -3,34 +3,48 @@ import matplotlib.pyplot as plt
 import math as math
 
 class Planets():
-    def __init__(self, m, x0, y0, v0):
+    def __init__(self):
+        self.lista_r=list()
+        self.a=list()
+        self.v=list()
+        self.vrijeme=list()
+        self.x=list()
+        self.y=list()
+        self.z=list()
+
+    def set_initial_conditions(self, m, r, v0):
         self.m=m
-        self.vp0=vp0
-        self.vo0=vo0
-        self.x0=x0
-        self.y0=y0
-        self.r=[np.array(x0,y0)]
-        self.a=[0]
-        self.v=[np.array(0,v0)]
+        self.v0=v0
+        self.r=r
+        self.lista_r.append(r)
+        self.vrijeme.append(0)
+        self.v.append(v0)
+        self.a.append(np.array((0,0,0)))
+        self.x.append(self.r[0])
+        self.y.append(self.r[1])
+        self.z.append(self.r[2])
+        
 
-class SolarSystem():
-    def __init__(self, dt):
-        self.planets=list()
-        self.G= 6.67408*10^11
-        self.dt=dt
+    def reset(self):
+        self.__init__()
 
-    def addPlanet(self, planet):
-        self.planets.append(planet)
-
-    def __move(self):
-        for i in self.planets:
-            for p in self.planets:
-                if i.m==i.p:
-                    i.a.append(0)
-                if i.m!=i.p:
-                    i.a.append(self.G*(i.m*p.m)/(abs(p.r[-1]-i.r[-1]))**2)
-                    
-
-                    
+def __move(i, p, dt=10**4, G=6.67408*10**(-11)):
+        if i!=p:
+            i.a.append((G*(i.m*p.m)*(p.lista_r[-1]-i.lista_r[-1])/((np.linalg.norm(p.lista_r[-1]-i.lista_r[-1]))**3))/i.m)
+            i.vrijeme.append(i.vrijeme[-1]+dt)
+            i.v.append(i.v[-1]+i.a[-1]*dt)
+            i.lista_r.append(i.lista_r[-1]+i.v[-1]*dt)
+            i.x.append(i.lista_r[-1][0])
+            i.y.append(i.lista_r[-1][1])
+            i.z.append(i.lista_r[-1][2])
+            
                 
+def plot_trajectory(planeti, t, dt):
+    N=int(t/dt)
+    for z in range(N):
+        for i in planeti:
+            for p in planeti:
+                __move(i, p)    
+        for f in planeti:
+            plt.plot(f.x,f.y)
 
