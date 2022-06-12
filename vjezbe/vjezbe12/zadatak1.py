@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import math as math
 
 class Planets():
     def __init__(self):
@@ -44,7 +43,15 @@ def __move(planeti, dt, G=6.67408*10**(-11)):
 def plot_trajectory(planeti, t, dt):
     N=int(t/dt)
     for z in range(N):
-                __move(planeti, dt)    
+        __move(planeti, dt)    
     for f in planeti:
         plt.plot(f.x,f.y)
 
+def plot_animate(planeti, t, dt):
+    N=int(t/dt)
+    for z in range(N):
+        __move(planeti, dt)
+        for f in planeti:
+            plt.plot(f.x,f.y)
+        plt.pause(0.0001)
+        plt.clf()
