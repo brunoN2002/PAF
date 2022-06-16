@@ -58,17 +58,16 @@ def integral_prav(func,a,b,N):
         lista_integrala_gornja.append(lista_integrala_gornja[-1]+(func(a+dx)*dx))
         lista_tocki.append(a)
     plt.scatter(N,lista_integrala_donja[-1])
-    #print(lista_integrala_donja)
     plt.scatter(N,lista_integrala_gornja[-1])
     return(lista_integrala_donja[-1], lista_integrala_gornja[-1])
 
 def integral_trap(func,a,b,N):
     dx=(b-a)/N
     lista_tocki=[a]
-    lista_integrala=[(func(a)+func(b))*dx]
+    lista_integrala=[(func(a)+func(b))*dx/2]
     for i in range(N-1):
         a+=dx
-        lista_integrala.append(lista_integrala[-1]+(((func(a-dx)+func(a+dx))/2)*dx))
+        lista_integrala.append(lista_integrala[-1]+(func(a)*dx))
         lista_tocki.append(a)
     plt.scatter(N, lista_integrala[-1])
     print(lista_integrala)
